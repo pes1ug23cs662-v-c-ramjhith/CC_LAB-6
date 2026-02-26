@@ -14,6 +14,7 @@ pipeline {
             steps {
                 sh 'docker run -d --name backend1 backend-app'
                 sh 'docker run -d --name backend2 backend-app'
+                sh 'sleep 5'
             }
         }
 
@@ -21,6 +22,7 @@ pipeline {
             steps {
                 sh 'docker rm -f nginx-lb || true'
                 sh 'docker run -d --name nginx-lb -p 80:80 nginx'
+                sh 'sleep 3'
                 sh 'docker cp nginx/default.conf nginx-lb:/etc/nginx/conf.d/default.conf'
                 sh 'docker exec nginx-lb nginx -s reload'
             }
